@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde: #90a224;
+      --vermelho: #801815;
+      --amarelo: #FDC75F;
+      --preto: #000000;
+      --fonte-principal: Arial, sans-serif;
+    }
+
+    .barra-superior {
+      background-color: #4f4f4f;
+      width: 100%;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;}
+
+    .barra-estado__logo svg {
+      height: 24px;
+      margin-left: 30px;
+    }
+
+    .faixa-superior {
+     width: 100%;
+     height: 10px;
+     background: linear-gradient(to right, #447D37 0%, #447D37 33%, #801815 33%, #801815 66%, #ECC700 66%, #ECC700 100%);
+     }
+
+    .faixa-inferior {
+     width: 100%;
+     height: 10px;
+     background: linear-gradient(to right, #447D37 0%, #447D37 33%, #801815 33%, #801815 66%, #ECC700 66%, #ECC700 100%);
+     }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--fonte-principal);
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      border: 5px solid var(--verde);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    h1 {
+      color: var(--vermelho);
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-weight: bold;
+      color: var(--preto);
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 2px solid var(--verde);
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: var(--verde);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 10px 5px;
+    }
+
+    button:hover {
+      background-color: #73811d;
+    }
+
+    #msg {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="barra-superior">
+    <a class="barra-estado__logo" title="rs.gov" href="https://www.rs.gov.br/">
+      <svg version="1.1" id="rs-gov-br" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+        width="77px" height="16px" viewBox="0 0 77 16" xml:space="preserve">
+        <title>RS.GOV.BR</title>
+        <desc>Governo do Estado do Rio Grande do Sul</desc>
+        <path d="M5.64,6.15c-1.8,0-2.92,1.09-2.92,3.4v3.55H0V3.48H2.73v1.94c.56-1.32,1.45-2.19,3.07-2.12v2.85h-.15Z" fill="#fff"></path>
+        <path d="M10.78,13.28c-1.34,0-2.85-.44-4.12-1.45l1.17-1.8c1.04,.76,2.13,1.15,3.03,1.15,.79,0,1.15-.29,1.15-.71v-.04c0-.59-.93-.79-1.99-1.11-1.34-.4-2.87-1.02-2.87-2.89v-.04c0-1.96,1.57-3.05,3.52-3.05,1.22,0,2.54,.42,3.58,1.11l-1.04,1.88c-.95-.56-1.9-.9-2.6-.9s-1,.29-1,.67v.04c0,.54,.92,.79,1.96,1.15,1.34,.44,2.91,1.09,2.91,2.85v.04c0,2.13-1.6,3.1-3.67,3.1h0Z" fill="#fff"></path>
+        <path d="M16.21,13.09v-2.87h2.91v2.87h-2.91Z" fill="#fff"></path>
+        <path d="M25.48,16c-1.56,0-3.03-.36-4.25-1l.93-2.04c.99,.56,1.97,.88,3.24,.88,1.87,0,2.75-.9,2.75-2.62v-.46c-.81,.97-1.68,1.56-3.14,1.56-2.24,0-4.28-1.64-4.28-4.49v-.04c0-2.87,2.06-4.49,4.28-4.49,1.48,0,2.36,.63,3.1,1.43v-1.24h2.73v7.45c0,3.63-1.8,5.08-5.37,5.08Zm2.67-8.21c0-1.31-1.02-2.22-2.35-2.22s-2.33,.92-2.33,2.22v.04c0,1.32,1,2.22,2.33,2.22s2.35-.92,2.35-2.22v-.04Z" fill="#fff"></path>
+        <path d="M37.91,13.32c-2.98,0-5.18-2.2-5.18-4.97v-.04c0-2.76,2.22-5,5.22-5s5.18,2.2,5.18,4.97v.04c0,2.76-2.22,5-5.22,5Zm2.53-5c0-1.42-1.02-2.66-2.53-2.66s-2.5,1.2-2.5,2.62v.04c0,1.42,1.02,2.66,2.53,2.66s2.5-1.2,2.5-2.62v-.04Z" fill="#fff"></path>
+        <path d="M49.88,13.17h-2.47l-3.79-9.69h2.89l2.15,6.44,2.17-6.44h2.84l-3.79,9.69Z" fill="#fff"></path>
+        <path d="M53.52,13.09v-2.87h2.91v2.87h-2.91Z" fill="#fff"></path>
+        <path d="M64.39,13.28c-1.45,0-2.35-.67-3-1.43v1.25h-2.73V0h2.73V4.86c.67-.9,1.57-1.56,3-1.56,2.24,0,4.38,1.76,4.38,4.97v.04c0,3.22-2.11,4.98-4.38,4.98h0Zm1.65-5.02c0-1.59-1.08-2.66-2.35-2.66s-2.33,1.06-2.33,2.66v.04c0,1.59,1.06,2.66,2.33,2.66s2.35-1.04,2.35-2.66v-.04Z" fill="#fff"></path>
+        <path d="M76.34,6.15c-1.8,0-2.92,1.09-2.92,3.4v3.55h-2.73V3.48h2.73v1.94c.56-1.32,1.45-2.19,3.07-2.12v2.85h-.15Z" fill="#fff"></path>
+      </svg>
+    </a>
+  </div>
+  
+  <div class="faixa-superior">
+  </div>
+  
+  <div class="container">
+    <h1>Login</h1>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Digite seu email" />
+
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" placeholder="Digite sua senha" />
+
+    <button id="btnLogin">Entrar</button>
+    <button id="btnCadastrar">Cadastrar-se</button>
+
+    <div id="msg"></div>
+
+    <script>
+      const BASE_URL = "http://localhost:8000";
+
+      async function login(email, senha) {
+        try {
+          const resposta = await fetch(`${BASE_URL}/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ username: email, password: senha }),
+          });
+
+          if (!resposta.ok) {
+            const erro = await resposta.json();
+            throw new Error(erro.detail || "Erro ao fazer login");
+          }
+
+          const dados = await resposta.json();
+          localStorage.setItem("token", dados.access_token);
+          mostrarMensagem("Login realizado com sucesso!", "green");
+
+          setTimeout(() => {
+            window.location.href = "site_cadastro.html";
+          }, 1500);
+        } catch (erro) {
+          mostrarMensagem(erro.message, "red");
+        }
+      }
+
+      function mostrarMensagem(msg, cor) {
+        const divMsg = document.querySelector("#msg");
+        divMsg.textContent = msg;
+        divMsg.style.color = cor;
+      }
+
+      document.querySelector("#btnLogin").addEventListener("click", () => {
+        const email = document.querySelector("#email").value.trim();
+        const senha = document.querySelector("#senha").value.trim();
+
+        if (!email || !senha) {
+          mostrarMensagem("Por favor, preencha email e senha.", "red");
+          return;
+        }
+
+        login(email, senha);
+      });
+
+      document.querySelector("#btnCadastrar").addEventListener("click", () => {
+        window.location.href = "site_cadastro.html";
+      });
+    </script>
+  </div>
+
+</body>
+
+<div class="faixa-inferior"></div>
+
+</html>
