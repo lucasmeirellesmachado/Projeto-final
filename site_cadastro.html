@@ -113,7 +113,7 @@
         const senha = document.getElementById("senha").value;
 
         try {
-          const resposta = await fetch("http://localhost:8000/auth/cadastrar", {
+          const resposta = await fetch("http://127.0.0.1:8000/auth/cadastrar", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"

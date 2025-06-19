@@ -1,7 +1,37 @@
 // 1. DEFININDO A URL BASE
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "http://127.0.0.1:8000";
 
-// 2. LOGIN
+// 2. CADASTRAR NOVO USUÁRIO
+async function registrarUsuario(nome, email, senha) {
+  try {
+    const resposta = await fetch(`${BASE_URL}/auth/cadastrar`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        nome: nome,
+        email: email,
+        senha: senha
+      })
+    });
+
+    if (!resposta.ok) {
+      const erro = await resposta.json();
+      alert("Erro ao cadastrar: " + erro.detail);
+      return;
+    }
+
+    alert("Usuário cadastrado com sucesso! Agora faça login.");
+  } 
+  
+  catch (erro) {
+    console.error("Erro ao registrar usuário:", erro);
+    alert("Erro de conexão com o servidor.");
+  }
+}
+
+// 3. REALIZAR LOGIN
 async function login(email, senha) {
   const response = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
@@ -25,7 +55,7 @@ async function login(email, senha) {
   return data.access_token;
 }
 
-// 3. LISTAR AGENTES (com token e filtros)
+// 4. LISTAR AGENTES (com token e filtros)
 async function listarAgentes(filtros = {}) {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -52,7 +82,7 @@ async function listarAgentes(filtros = {}) {
   console.log("Agentes encontrados:", resultado);
 }
 
-// 4. CARREGAR OPÇÕES DE PREENCHIMENTO (ESPECIALIDADE, NÍVEL ESCOLARIDADE, ETC.)
+// 5. CARREGAR OPÇÕES DE PREENCHIMENTO (ESPECIALIDADE, NÍVEL ESCOLARIDADE, ETC.)
 async function carregarOpcoes(url, seletor) {
   try {
     const resposta = await fetch(url);
@@ -88,18 +118,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// 5. ENVIAR FORMULÁRIO DE CADASTRO
+// 6. ENVIAR FORMULÁRIO DE CADASTRO
+
+// Função auxiliar: pega valores de <select multiple>
+function getValoresSelectMultiplo(id) {
+  const select = document.getElementById(id);
+  return Array.from(select.selectedOptions).map(option => parseInt(option.value));
+}
+
 async function enviarFormulario() {
   const dados = {
     nu_cpf: document.querySelector("#cpf").value,
     nu_cns_cnes: document.querySelector("#cns").value,
     data_nascimento: document.querySelector("#data_nascimento").value,
     municipio: document.querySelector("#municipio").value,
+    co_cep: document.querySelector("#cep").value,
 
-    co_especialidade: parseInt(document.querySelector("#especialidade").value),
+
+    co_especialidade: getValoresSelectMultiplo("especialidade"),
     co_nivel_escolaridade: parseInt(document.querySelector("#nivel_escolaridade").value),
-    co_capacitacao: parseInt(document.querySelector("#capacitacao").value),
-    co_cbo_cnes: parseInt(document.querySelector("#cbo_cnes").value),
+    co_capacitacao: getValoresSelectMultiplo("capacitacao"),
+    co_cbo_cnes: getValoresSelectMultiplo("cbo_cnes"),
     ds_vinculo_empregaticio: parseInt(document.querySelector("#vinculo").value),
     ds_cargo: parseInt(document.querySelector("#cargo").value),
     co_genero: parseInt(document.querySelector("#genero").value),
@@ -130,7 +169,9 @@ async function enviarFormulario() {
       alert("Agente cadastrado com sucesso!");
       console.log(resultado);
     }
-  } catch (erro) {
+  } 
+  
+  catch (erro) {
     console.error("Erro ao enviar dados:", erro);
     alert("Erro de conexão com o servidor");
   }
