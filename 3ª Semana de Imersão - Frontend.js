@@ -176,3 +176,41 @@ async function enviarFormulario() {
     alert("Erro de conexão com o servidor");
   }
 }
+
+// 7. VERIFICAR SE O USUÁRIO ESTÁ LOGADO
+async function verificarSessao() {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Sessão expirada. Faça login novamente.");
+    window.location.href = "site_login.html";
+    return;
+  }
+
+  try {
+    const resposta = await fetch(`${BASE_URL}/perfil`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (!resposta.ok) {
+      throw new Error("Token inválido ou expirado.");
+    }
+
+    const usuario = await resposta.json();
+    console.log("Usuário autenticado:", usuario);
+    // Se quiser exibir: document.getElementById("usuarioLogado").innerText = `Olá, ${usuario.nome}`;
+  } catch (erro) {
+    alert("Sessão inválida. Redirecionando para login.");
+    localStorage.removeItem("token");
+    window.location.href = "site_login.html";
+  }
+}
+
+// 8. LOGOUT
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "site_login.html";
+}

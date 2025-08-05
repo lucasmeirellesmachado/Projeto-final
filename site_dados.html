@@ -153,6 +153,8 @@
 
     <button id="btnEnviarFormulario">Enviar Dados</button>
 
+    <button onclick="logout()">Sair</button>
+
     <div id="status"></div>
 
     <script>
@@ -199,10 +201,10 @@
           data_nascimento: document.querySelector("#data_nascimento").value,
           municipio: document.querySelector("#municipio").value,
 
-          co_especialidade: parseInt(document.querySelector("#especialidade").value),
+          co_especialidade: getValoresSelectMultiplo("especialidade"),
           co_nivel_escolaridade: parseInt(document.querySelector("#nivel_escolaridade").value),
-          co_capacitacao: parseInt(document.querySelector("#capacitacao").value),
-          co_cbo_cnes: parseInt(document.querySelector("#cbo_cnes").value),
+          co_capacitacao: getValoresSelectMultiplo("capacitacao"),
+          co_cbo_cnes: getValoresSelectMultiplo("cbo_cnes"),
           ds_vinculo_empregaticio: parseInt(document.querySelector("#vinculo").value),
           ds_cargo: parseInt(document.querySelector("#cargo").value),
           co_genero: parseInt(document.querySelector("#genero").value),
@@ -242,6 +244,15 @@
       document.getElementById("btnEnviarFormulario").addEventListener("click", () => {
         enviarFormulario();
       });
+
+      function getValoresSelectMultiplo(id) {
+        const select = document.getElementById(id);
+        return Array.from(select.selectedOptions).map(option => parseInt(option.value));
+      }
+
+      // Verifica se já está logado
+      verificarSessao();
+      
     </script>
   </div>
 
