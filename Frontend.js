@@ -36,17 +36,17 @@ async function login(email, senha) {
   const response = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
     },
-    body: new URLSearchParams({
-      username: email,
-      password: senha,
+    body: JSON.stringify({
+      email: email,
+      senha: senha,
     }),
   });
 
   if (!response.ok) {
     const erro = await response.json();
-    console.error("Erro ao logar:", erro.detail);
+    console.error("Erro ao fazer login:", erro.detail);
     return null;
   }
 
@@ -177,37 +177,37 @@ async function enviarFormulario() {
   }
 }
 
-// 7. VERIFICAR SE O USUÁRIO ESTÁ LOGADO
-async function verificarSessao() {
-  const token = localStorage.getItem("token");
+  // 7. VERIFICAR SE O USUÁRIO ESTÁ LOGADO
+  async function verificarSessao() {
+    const token = localStorage.getItem("token");
 
-  if (!token) {
-    alert("Sessão expirada. Faça login novamente.");
-    window.location.href = "site_login.html";
-    return;
-  }
-
-  try {
-    const resposta = await fetch(`${BASE_URL}/perfil`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    });
-
-    if (!resposta.ok) {
-      throw new Error("Token inválido ou expirado.");
+    if (!token) {
+      alert("Sessão expirada. Faça login novamente.");
+      window.location.href = "site_login.html";
+      return;
     }
 
-    const usuario = await resposta.json();
-    console.log("Usuário autenticado:", usuario);
-    // Se quiser exibir: document.getElementById("usuarioLogado").innerText = `Olá, ${usuario.nome}`;
-  } catch (erro) {
-    alert("Sessão inválida. Redirecionando para login.");
-    localStorage.removeItem("token");
-    window.location.href = "site_login.html";
+    try {
+      const resposta = await fetch(`${BASE_URL}/perfil`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (!resposta.ok) {
+        throw new Error("Token inválido ou expirado.");
+      }
+
+      const usuario = await resposta.json();
+      console.log("Usuário autenticado:", usuario);
+      // Se quiser exibir: document.getElementById("usuarioLogado").innerText = `Olá, ${usuario.nome}`;
+    } catch (erro) {
+      alert("Sessão inválida. Redirecionando para login.");
+      localStorage.removeItem("token");
+      window.location.href = "site_login.html";
+    }
   }
-}
 
 // 8. LOGOUT
 function logout() {
