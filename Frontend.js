@@ -133,16 +133,14 @@ async function enviarFormulario() {
     data_nascimento: document.querySelector("#data_nascimento").value,
     municipio: document.querySelector("#municipio").value,
     co_cep: document.querySelector("#cep").value,
-
-
     co_especialidade: getValoresSelectMultiplo("especialidade"),
-    co_nivel_escolaridade: parseInt(document.querySelector("#nivel_escolaridade").value),
+    co_nivel_escolaridade: (document.querySelector("#nivel_escolaridade").value),
     co_capacitacao: getValoresSelectMultiplo("capacitacao"),
     co_cbo_cnes: getValoresSelectMultiplo("cbo_cnes"),
-    ds_vinculo_empregaticio: parseInt(document.querySelector("#vinculo").value),
-    ds_cargo: parseInt(document.querySelector("#cargo").value),
-    co_genero: parseInt(document.querySelector("#genero").value),
-    co_unidade_vigilancia_sanitaria: parseInt(document.querySelector("#unidade").value)
+    ds_vinculo_empregaticio: (document.querySelector("#vinculo").value),
+    ds_cargo: (document.querySelector("#cargo").value),
+    co_genero: (document.querySelector("#genero").value),
+    co_unidade_vigilancia_sanitaria: (document.querySelector("#unidade").value)
   };
 
   try {
@@ -176,38 +174,6 @@ async function enviarFormulario() {
     alert("Erro de conexão com o servidor");
   }
 }
-
-  // 7. VERIFICAR SE O USUÁRIO ESTÁ LOGADO
-  async function verificarSessao() {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      alert("Sessão expirada. Faça login novamente.");
-      window.location.href = "site_login.html";
-      return;
-    }
-
-    try {
-      const resposta = await fetch(`${BASE_URL}/perfil`, {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-
-      if (!resposta.ok) {
-        throw new Error("Token inválido ou expirado.");
-      }
-
-      const usuario = await resposta.json();
-      console.log("Usuário autenticado:", usuario);
-      // Se quiser exibir: document.getElementById("usuarioLogado").innerText = `Olá, ${usuario.nome}`;
-    } catch (erro) {
-      alert("Sessão inválida. Redirecionando para login.");
-      localStorage.removeItem("token");
-      window.location.href = "site_login.html";
-    }
-  }
 
 // 8. LOGOUT
 function logout() {

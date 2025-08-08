@@ -145,15 +145,15 @@ opcoes_cargo = {
 }
 
 opcoes_genero = {
-    1: "Masculino",
-    2: "Feminino",
-    3: "Outros"
+    1: "MASCULINO",
+    2: "FEMININO",
+    3: "OUTROS"
 }
 
 opcoes_unidade_vigilancia_sanitaria = {
     1: "ANVISA",
-    2: "Vigilância Estadual",
-    3: "Vigilância Municipal"
+    2: "VIGILÂNCIA ESTADUAL",
+    3: "VIGILÂNCIA MUNICIPAL"
 }
 
 # Rotas
